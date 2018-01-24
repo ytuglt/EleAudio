@@ -47,7 +47,7 @@ public class AudioSelectActivity extends BaseActivity {
     }
 
     private void initRecycleView() {
-        mOutRecycleView = findViewById(R.id.out_call_list);
+        mOutRecycleView = findViewById(R.id.audio_list);
         mOutRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mOutRecycleView.addItemDecoration(new RecycleViewDivider(this));
 
