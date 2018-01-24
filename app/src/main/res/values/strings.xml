@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Elevator</string>
+    <string name="app_name">EleAudio</string>
     <string name="main_actionbar_title">周边电梯</string>
     <string name="out_call">外呼</string>
     <string name="in_call">内呼</string>
