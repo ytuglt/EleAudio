@@ -33,8 +33,8 @@ public class InCallActivity extends BaseBleComActivity implements View.OnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        byte[] query = {(byte) 0xb5, 0x00, 0x00, (byte) 0xb5};
-        setQueryData(query);
+//        byte[] query = {(byte) 0xb5, 0x00, 0x00, (byte) 0xb5};
+//        setQueryData(query);
         Logger.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_in_call);
         TextView titleView = findViewById(R.id.title);

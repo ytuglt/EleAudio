@@ -1,9 +1,12 @@
 package com.shaoxia.eleaudio;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -28,7 +31,7 @@ public class AudioSelectActivity extends BaseActivity {
     private RecyclerView mOutRecycleView;
     private AudiosAdapter mAudioAdapter;
 
-    private List<String> mAudioNames = new ArrayList<>();
+    private List<File> mAudioNames = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +59,10 @@ public class AudioSelectActivity extends BaseActivity {
         mAudioAdapter.setOnItemClickListener(new AudiosAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                Intent result = new Intent();
+                result.putExtra("path", mAudioNames.get(position).getAbsolutePath());
+                setResult(Activity.RESULT_OK, result);
+                finish();
             }
         });
     }
@@ -83,7 +90,7 @@ public class AudioSelectActivity extends BaseActivity {
                 do {
                     String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
                     Logger.d(TAG, "onLoadFinished: path is  :" + path);
-                    mAudioNames.add(new File(path).getName());
+                    mAudioNames.add(new File(path));
                 } while (cursor.moveToNext());
 
                 mAudioAdapter.notifyDataSetChanged();

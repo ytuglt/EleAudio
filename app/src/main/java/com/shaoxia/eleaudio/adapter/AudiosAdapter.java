@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.shaoxia.eleaudio.R;
 import com.shaoxia.eleaudio.model.MDevice;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -16,11 +17,11 @@ import java.util.List;
 
 public class AudiosAdapter extends RecyclerView.Adapter<AudiosAdapter.MyViewHolder> implements View.OnClickListener {
 
-    private List<String> dataList;
+    private List<File> dataList;
     private OnItemClickListener onItemClickListener;
 
 
-    public AudiosAdapter(List<String> list) {
+    public AudiosAdapter(List<File> list) {
         dataList = list;
     }
 
@@ -35,7 +36,7 @@ public class AudiosAdapter extends RecyclerView.Adapter<AudiosAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.itemView.setTag(position);
-        String title = dataList.get(position);
+        String title = dataList.get(position).getName();
         holder.textView.setText(title);
 //        holder.tVId.setText(mDev.getElevatorId());
     }

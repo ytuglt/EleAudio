@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/text_floor"
+            android:id="@+id/file_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="选择文件"/>
@@ -29,5 +29,14 @@
             android:textColor="@android:color/white" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_bg"
+        android:text="下发到设备"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

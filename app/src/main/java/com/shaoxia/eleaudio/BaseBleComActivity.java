@@ -35,7 +35,7 @@ public class BaseBleComActivity extends BaseActivity {
     private BluetoothGattCharacteristic notifyCharacteristic;
     private BluetoothGattCharacteristic writeCharacteristic;
 
-    private Handler mHander;
+//    private Handler mHander;
 
 
     /**
@@ -152,7 +152,8 @@ public class BaseBleComActivity extends BaseActivity {
                     }
                 }
 //                sendQueryData();
-                writeData();
+//                writeData();
+                dismissDialog();
             }
         }
     }
@@ -161,12 +162,12 @@ public class BaseBleComActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.d(TAG, "onCreate: ");
-        mHander = new Handler();
+//        mHander = new Handler();
         Intent intent = getIntent();
         mDevAddress = intent.getStringExtra("dev_mac");
         mDevName = intent.getStringExtra("dev_name");
         Logger.d(TAG, "onCreate: mDevAddress = " + mDevAddress + ",devname = " + mDevName);
-        showDialog();
+
     }
 
     @Override
@@ -180,7 +181,9 @@ public class BaseBleComActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Logger.d(TAG, "onResume: ");
+        showDialog();
         BleHelper.connectDevice(this, mDevAddress, mDevName);
+
     }
 
     @Override
@@ -192,11 +195,14 @@ public class BaseBleComActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHander != null) {
-            mHander.removeCallbacks(stopConnectRunnable);
-        }
+//        if (mHander != null) {
+//            mHander.removeCallbacks(stopConnectRunnable);
+//        }
         BleHelper.stopBroadcastDataNotify(notifyCharacteristic);
         BleHelper.disconnectDevice();
+
+
+        disconnectBle();
     }
 
     private ProgressDialog mProgressDialog;
@@ -232,15 +238,16 @@ public class BaseBleComActivity extends BaseActivity {
     }
 
     private byte[] mSendData;
-
-    protected void setQueryData(byte[] bytes) {
-        mSendData = bytes;
-    }
+//
+//    protected void setQueryData(byte[] bytes) {
+//        mSendData = bytes;
+//    }
 
     protected void sendData(byte[] array) {
         mSendData = array;
         showDialog();
-        BleHelper.connectDevice(this, mDevAddress, mDevName);
+        writeData();
+//        BleHelper.connectDevice(this, mDevAddress, mDevName);
     }
 
 //    protected void sendQueryData() {
@@ -249,18 +256,18 @@ public class BaseBleComActivity extends BaseActivity {
 //    }
 
     //停止扫描
-    private Runnable stopConnectRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            disconnectBle();
-        }
-    };
+//    private Runnable stopConnectRunnable = new Runnable() {
+//
+//        @Override
+//        public void run() {
+//            disconnectBle();
+//        }
+//    };
 
     private void writeData() {
         Logger.d(TAG, "sendData: " + StringUtils.ByteArraytoHex(mSendData));
         BleHelper.writeCharacteristic(writeCharacteristic, mSendData);
-        mHander.postDelayed(stopConnectRunnable, Configure.DEFAULT_CONNECT_TIME);
+//        mHander.postDelayed(stopConnectRunnable, Configure.DEFAULT_CONNECT_TIME);
 
     }
 
@@ -270,10 +277,12 @@ public class BaseBleComActivity extends BaseActivity {
 
     protected void onReceiveData(byte[] array) {
         Logger.d(TAG, "onReceiveData: data:" + StringUtils.ByteArraytoHex(array));
-        if (mHander != null) {
-            mHander.removeCallbacks(stopConnectRunnable);
-        }
-        disconnectBle();
+//        if (mHander != null) {
+//            mHander.removeCallbacks(stopConnectRunnable);
+//        }
+//        disconnectBle();
+
+        dismissDialog();
     }
 
     private void disconnectBle() {
