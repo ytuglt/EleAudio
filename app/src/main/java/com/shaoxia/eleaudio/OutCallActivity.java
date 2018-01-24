@@ -61,6 +61,7 @@ public class OutCallActivity extends BaseBleComActivity implements View.OnClickL
 
     private void sendFile() {
         if (mFileContent == null) {
+            Toast.makeText(this, "请选择音频文件",Toast.LENGTH_SHORT).show();
             Logger.d(TAG, "sendFile: file content is null");
             return;
         }
